@@ -29,6 +29,20 @@ def test_invalid_info():
     resp, status_code = wrapper_handler.get('Egypt')
     assert status_code == 400
 
+def test_valid_info():
+	wrapper_handler = wrapperHandler()
+
+	dummy_parser = dummyParser({'info': 'topLevelDomain'})
+	dummy_country_handler = dummyCountryHandler({"name": "Egypt", "topLevelDomain": ".eg", "capital": "Cairo"})
+
+	wrapper_handler.parser = dummy_parser
+	wrapper_handler.country = dummy_country_handler
+
+	resp, status_code = wrapper_handler.get('Egypt')
+	assert status_code == 200
+
 
 if __name__ == "__main__":
     test_invalid_info()
+    test_valid_info()
+
