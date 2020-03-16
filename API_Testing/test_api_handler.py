@@ -8,8 +8,8 @@ class testCountryHandler(unittest.TestCase):
                           'numericCode', 'currencies', 'languages', 'translations', 'flag', 'regionalBlocs', 'cioc']
 
     def test_reqinfo(self):
-        country = countryHandler('Egypt')
-        country_info = country.req_info()
+        country = countryHandler()
+        country_info = country.req_info('Egypt')
 
         assert isinstance(country_info, dict)
         assert set(self.dict_keys).issubset(country_info.keys())
