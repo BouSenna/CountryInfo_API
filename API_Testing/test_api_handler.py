@@ -11,8 +11,12 @@ class testCountryHandler(unittest.TestCase):
         country = countryHandler()
         country_info = country.req_info('Egypt')
 
+        # asserts that req_info returns a dictionary.
         assert isinstance(country_info, dict)
+        # asserts that the country_info dictionary contains all the dict_keys.
         assert set(self.dict_keys).issubset(country_info.keys())
+        # asserts that the values of the country_info is correct.
+        assert country_info['name'] == 'Egypt'
 
 
 if __name__ == '__main__':

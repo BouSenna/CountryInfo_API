@@ -1,6 +1,6 @@
 import flask
 from flask_restful import Api
-from api_wrapper_handler import wrapperHandler
+from API.api_wrapper_handler import wrapperHandler
 
 app = flask.Flask(__name__)
 api = Api(app)

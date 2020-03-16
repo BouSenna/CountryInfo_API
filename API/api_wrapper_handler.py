@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from api_handler import countryHandler
+from API.api_handler import countryHandler
 
 class wrapperHandler(Resource):
     def __init__(self):
