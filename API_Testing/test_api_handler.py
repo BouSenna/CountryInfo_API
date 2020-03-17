@@ -7,14 +7,24 @@ class testCountryHandler(unittest.TestCase):
                           'subregion', 'population', 'latlng', 'demonym', 'area', 'gini', 'timezones', 'borders', 'nativeName',
                           'numericCode', 'currencies', 'languages', 'translations', 'flag', 'regionalBlocs', 'cioc']
 
-    def test_reqinfo(self):
+    def test_reqinfo_return_type(self):
         country = countryHandler()
         country_info = country.req_info('Egypt')
 
         # asserts that req_info returns a dictionary.
         assert isinstance(country_info, dict)
+
+    def test_reqinfo_data_completeness(self):
+        country = countryHandler()
+        country_info = country.req_info('Egypt')
+
         # asserts that the country_info dictionary contains all the dict_keys.
         assert set(self.dict_keys).issubset(country_info.keys())
+
+    def test_reqinfo_return_values(self):
+        country = countryHandler()
+        country_info = country.req_info('Egypt')
+
         # asserts that the values of the country_info is correct.
         assert country_info['name'] == 'Egypt'
 
