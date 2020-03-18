@@ -1,10 +1,10 @@
-import unittest
-import requests
+from flask_restful import Resource
 
 
-class testAPIWrapper(unittest.TestCase):
-    def setUp(self):
-        self.EG_info = {"name": "Egypt",
+class dummyCountryHandler(Resource):
+
+    def req_info(self, country_name):
+        return {"name": "Egypt",
                         "topLevelDomain": [".eg"],
                         "alpha2Code": "EG",
                         "alpha3Code": "EGY",
@@ -34,26 +34,3 @@ class testAPIWrapper(unittest.TestCase):
                                               ["\u062c\u0627\u0645\u0639\u0629 \u0627\u0644\u062f\u0648\u0644 \u0627\u0644\u0639\u0631\u0628\u064a\u0629",
                                                "J\u0101mi\u02bbat ad-Duwal al-\u02bbArab\u012byah","League of Arab States"]}],"cioc": "EGY"}
 
-    # Requesting all country information
-    def test_country_info(self):
-        response = requests.get('http://localhost:5000/egypt?')
-        self.assertEqual(response.json(), self.EG_info)
-
-    # Requesting country name
-    def test_country_name(self):
-        response = requests.get('http://localhost:5000/egypt?info=name')
-        self.assertEqual(response.json(), 'Egypt')
-
-    # Requesting list of currencies
-    def test_country_currency(self):
-        response = requests.get('http://localhost:5000/egypt?info=currencies')
-        self.assertEqual(response.json(), [{"code": "EGP","name": "Egyptian pound", "symbol": "\u00a3"}])
-
-    # Requesting missing information
-    def test_country_none(self):
-        response = requests.get('http://localhost:5000/egypt?info=weather')
-        self.assertEqual(response.json(), {"error": "invalid info"})
-
-
-if __name__ == "__main__":
-    unittest.main()
