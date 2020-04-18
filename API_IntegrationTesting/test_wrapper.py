@@ -1,6 +1,6 @@
 import unittest
 import requests
-
+from API.api_handler import countryHandler
 
 class testAPIWrapper(unittest.TestCase):
     def setUp(self):
@@ -114,6 +114,13 @@ class testAPIWrapper(unittest.TestCase):
         response = requests.get('http://localhost:5000/egypt?info=weather')
         self.assertEqual(response.json(), {"error": "invalid info"})
 
+    # Requesting cached information.
+    def test_country_cachedInfo(self):
+        country = countryHandler()
+        country.req_info("Iran")
+        country.req_info("Iran")
+
+        self.assertTrue(country.response.from_cache)
 
 if __name__ == "__main__":
     unittest.main()
