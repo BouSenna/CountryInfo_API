@@ -12,9 +12,13 @@ install:
   - pip install flask_restful
   - pip install requests
   - pip install requests_cache
+  - pip install coverage
   - pip install -e .
 
 script:
-  - python API_IntegrationTesting/test_wrapper.py
-  - python API_Testing/test_api_handler.py
-  - python API_Testing/test_api_wrapper_handler.py
+  - coverage run  API_IntegrationTesting/test_wrapper.py
+  - coverage run  API_Testing/test_api_handler.py
+  - coverage run  API_Testing/test_api_wrapper_handler.py
+
+after_success:
+  bash <(curl -s https://codecov.io/bash)
