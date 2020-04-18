@@ -15,5 +15,6 @@ install:
   - pip install -e .
 
 script:
+  - python API_IntegrationTesting/test_wrapper.py
   - python API_Testing/test_api_handler.py
   - python API_Testing/test_api_wrapper_handler.py
