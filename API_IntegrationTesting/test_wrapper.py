@@ -1,6 +1,8 @@
 import unittest
-import requests
+import json
+
 from API.api_handler import countryHandler
+from API.main import app
 
 class testAPIWrapper(unittest.TestCase):
     def setUp(self):
@@ -91,28 +93,36 @@ class testAPIWrapper(unittest.TestCase):
                             }
                         ],
                         "cioc": "EGY"
-                    }
+                        }
 
 
     # Requesting all country information
     def test_country_info(self):
-        response = requests.get('http://localhost:5000/egypt?')
-        self.assertEqual(response.json(), self.EG_info)
+        client = app.test_client()
+        response = client.get('http://localhost:5000/egypt?')
+
+        self.assertEqual(json.dumps(self.EG_info).encode('UTF-8')+b'\n', response.data)
 
     # Requesting country name
     def test_country_name(self):
-        response = requests.get('http://localhost:5000/egypt?info=name')
-        self.assertEqual(response.json(), 'Egypt')
+        client = app.test_client()
+        response = client.get('http://localhost:5000/egypt?info=name')
+
+        self.assertEqual(b'"Egypt"\n', response.data)
 
     # Requesting list of currencies
     def test_country_currency(self):
-        response = requests.get('http://localhost:5000/egypt?info=currencies')
-        self.assertEqual(response.json(), [{"code": "EGP","name": "Egyptian pound", "symbol": "\u00a3"}])
+        client = app.test_client()
+        response = client.get('http://localhost:5000/egypt?info=currencies')
+
+        self.assertEqual(b'[{"code": "EGP", "name": "Egyptian pound", "symbol": "\u00a3"}]\n', response.data)
 
     # Requesting missing information
     def test_country_none(self):
-        response = requests.get('http://localhost:5000/egypt?info=weather')
-        self.assertEqual(response.json(), {"error": "invalid info"})
+        client = app.test_client()
+        response = client.get('http://localhost:5000/egypt?info=weather')
+
+        self.assertEqual(b'{"error": "invalid info"}\n', response.data)
 
     # Requesting cached information.
     def test_country_cachedInfo(self):
